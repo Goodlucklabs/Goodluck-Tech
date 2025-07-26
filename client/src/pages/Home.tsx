@@ -66,7 +66,7 @@ export default function Home() {
                 className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg"
               />
               <span className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white truncate">
-                Goodluck Technology
+                Goodluck
               </span>
             </div>
             
@@ -146,7 +146,7 @@ export default function Home() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <div className="mb-8 sm:mb-12">
-            <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mb-4 sm:mb-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mb-4 sm:mb-6 mt-2.5">
               <img 
                 src={goodluckLogo} 
                 alt="Goodluck Technology" 
@@ -442,7 +442,10 @@ export default function Home() {
             <p className="text-gray-600 dark:text-gray-300 mb-6">
               Don't see the perfect role? We're always looking for exceptional talent.
             </p>
-            <Button className="btn-gradient text-white px-8 py-4 font-semibold">
+            <Button 
+              onClick={() => window.location.href = 'mailto:goodlucklabs@gmail.com?subject=Resume Submission&body=Hi Goodluck Labs team,%0D%0A%0D%0AI am interested in joining your team. Please find my resume attached.%0D%0A%0D%0ABest regards'}
+              className="btn-gradient text-white px-8 py-4 font-semibold"
+            >
               <Send className="w-4 h-4 mr-2" />
               Send Us Your Resume
             </Button>
@@ -501,7 +504,12 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-900 dark:text-white">Email</h4>
-                    <p className="text-gray-600 dark:text-gray-300">hello@goodlucktech.com</p>
+                    <p 
+                      className="text-gray-600 dark:text-gray-300 cursor-pointer hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                      onClick={() => window.location.href = 'mailto:goodlucklabs@gmail.com'}
+                    >
+                      goodlucklabs@gmail.com
+                    </p>
                   </div>
                 </div>
                 
@@ -511,7 +519,12 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-900 dark:text-white">Phone</h4>
-                    <p className="text-gray-600 dark:text-gray-300">+1 (555) 123-4567</p>
+                    <p 
+                      className="text-gray-600 dark:text-gray-300 cursor-pointer hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                      onClick={() => window.location.href = 'tel:+918249738604'}
+                    >
+                      +91 824 973 8604
+                    </p>
                   </div>
                 </div>
                 
@@ -521,7 +534,12 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-900 dark:text-white">Office</h4>
-                    <p className="text-gray-600 dark:text-gray-300">San Francisco, CA</p>
+                    <p 
+                      className="text-gray-600 dark:text-gray-300 cursor-pointer hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                      onClick={() => window.open('https://maps.google.com/?q=444+MG+Road+Ste+218,+Bangalore,+India+560001', '_blank')}
+                    >
+                      444 MG Road Ste 218, Bangalore, India 560001
+                    </p>
                   </div>
                 </div>
               </div>
@@ -529,13 +547,28 @@ export default function Home() {
               <div>
                 <h4 className="font-medium text-gray-900 dark:text-white mb-4">Follow Us</h4>
                 <div className="flex space-x-4">
-                  <Button variant="ghost" size="icon" className="hover:bg-purple-500 hover:text-white">
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="hover:bg-purple-500 hover:text-white"
+                    onClick={() => window.open('https://x.com/GoodluckLabs', '_blank')}
+                  >
                     <Twitter className="h-5 w-5" />
                   </Button>
-                  <Button variant="ghost" size="icon" className="hover:bg-purple-500 hover:text-white">
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="hover:bg-purple-500 hover:text-white"
+                    onClick={() => window.open('https://www.linkedin.com/company/goodluck-labs/posts/?feedView=all', '_blank')}
+                  >
                     <Linkedin className="h-5 w-5" />
                   </Button>
-                  <Button variant="ghost" size="icon" className="hover:bg-purple-500 hover:text-white">
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="hover:bg-purple-500 hover:text-white"
+                    onClick={() => window.open('https://github.com/Goodlucklabs', '_blank')}
+                  >
                     <Github className="h-5 w-5" />
                   </Button>
                 </div>
@@ -584,7 +617,10 @@ export default function Home() {
                     />
                   </div>
                   
-                  <Button className="w-full btn-gradient text-white py-4 font-semibold">
+                  <Button 
+                    onClick={() => window.location.href = 'mailto:goodlucklabs@gmail.com?subject=Contact Form Message&body=Hi Goodluck Labs team,%0D%0A%0D%0APlease fill in your message here.%0D%0A%0D%0ABest regards'}
+                    className="w-full btn-gradient text-white py-4 font-semibold"
+                  >
                     <Send className="w-4 h-4 mr-2" />
                     Send Message
                   </Button>
@@ -608,13 +644,28 @@ export default function Home() {
                 Building the future of blockchain technology with innovative Web3 solutions.
               </p>
               <div className="flex space-x-4">
-                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="text-gray-400 hover:text-white"
+                  onClick={() => window.open('https://x.com/GoodluckLabs', '_blank')}
+                >
                   <Twitter className="h-5 w-5" />
                 </Button>
-                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="text-gray-400 hover:text-white"
+                  onClick={() => window.open('https://www.linkedin.com/company/goodluck-labs/posts/?feedView=all', '_blank')}
+                >
                   <Linkedin className="h-5 w-5" />
                 </Button>
-                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="text-gray-400 hover:text-white"
+                  onClick={() => window.open('https://github.com/Goodlucklabs', '_blank')}
+                >
                   <Github className="h-5 w-5" />
                 </Button>
               </div>

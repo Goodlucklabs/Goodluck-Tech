@@ -142,17 +142,17 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
+      <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-32">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10"></div>
         
         {/* Floating elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-purple-500/20 rounded-full animate-float"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-cyan-500/20 rotate-45 animate-float" style={{animationDelay: "2s"}}></div>
+        <div className="absolute top-40 left-10 w-20 h-20 bg-purple-500/20 rounded-full animate-float"></div>
+        <div className="absolute top-60 right-20 w-16 h-16 bg-cyan-500/20 rotate-45 animate-float" style={{animationDelay: "2s"}}></div>
         <div className="absolute bottom-40 left-20 w-12 h-12 bg-green-500/20 rounded-full animate-float" style={{animationDelay: "4s"}}></div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <div className="mb-8">
-            <div className="inline-flex items-center justify-center w-24 h-24 mb-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 mt-8">
+          <div className="mb-6">
+            <div className="inline-flex items-center justify-center w-24 h-24 mb-8 mt-2.5">
               <img 
                 src={goodluckLogo} 
                 alt="Goodluck Technology" 
@@ -165,16 +165,16 @@ export default function Landing() {
               Development Studio
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed">
               Building the future of decentralized applications with cutting-edge Web3 technologies. 
               From DeFi protocols to Web3 metaverse battle royal gaming, we craft blockchain solutions that scale.
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
             <Button 
               onClick={() => scrollToSection('portfolio')}
-              className="btn-gradient text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-2xl"
+              className="btn-gradient text-white px-8 py-3 rounded-xl font-semibold text-lg shadow-2xl"
             >
               <Rocket className="w-5 h-5 mr-3" />
               View Our Projects
@@ -182,7 +182,7 @@ export default function Landing() {
             <Button 
               variant="outline"
               onClick={() => window.location.href = 'mailto:goodlucklabs@gmail.com'}
-              className="glassmorphism border-purple-500/30 hover:border-purple-500/60 px-8 py-4 rounded-xl font-semibold text-lg"
+              className="glassmorphism border-purple-500/30 hover:border-purple-500/60 px-8 py-3 rounded-xl font-semibold text-lg"
             >
               <Send className="w-5 h-5 mr-3" />
               Contact Us
@@ -395,7 +395,7 @@ export default function Landing() {
               Don't see the perfect role? We're always looking for exceptional talent.
             </p>
             <Button 
-              onClick={() => window.location.href = 'mailto:goodlucklabs@gmail.com'}
+              onClick={() => window.location.href = 'mailto:goodlucklabs@gmail.com?subject=Resume Submission&body=Hi Goodluck Labs team,%0D%0A%0D%0AI am interested in joining your team. Please find my resume attached.%0D%0A%0D%0ABest regards'}
               className="btn-gradient text-white px-8 py-4 font-semibold"
             >
               <Send className="w-4 h-4 mr-2" />
@@ -445,7 +445,7 @@ export default function Landing() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             <Card className="glassmorphism border-white/20 dark:border-gray-700/30 card-hover">
               <CardContent className="p-8 text-center">
                 <Mail className="w-12 h-12 text-purple-600 mx-auto mb-4" />
@@ -462,25 +462,67 @@ export default function Landing() {
             
             <Card className="glassmorphism border-white/20 dark:border-gray-700/30 card-hover">
               <CardContent className="p-8 text-center">
-                <Github className="w-12 h-12 text-purple-600 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">GitHub</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">Check out our open source projects</p>
-                <Button variant="outline" className="border-purple-500 text-purple-600 dark:text-purple-400">
-                  View Projects
+                <Phone className="w-12 h-12 text-purple-600 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Call Us</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">Let's talk about your project</p>
+                <Button 
+                  onClick={() => window.location.href = 'tel:+918249738604'}
+                  variant="outline" 
+                  className="border-purple-500 text-purple-600 dark:text-purple-400"
+                >
+                  +91 824 973 8604
                 </Button>
               </CardContent>
             </Card>
             
             <Card className="glassmorphism border-white/20 dark:border-gray-700/30 card-hover">
               <CardContent className="p-8 text-center">
-                <Twitter className="w-12 h-12 text-purple-600 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Follow Us</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">Stay updated on social media</p>
-                <Button variant="outline" className="border-purple-500 text-purple-600 dark:text-purple-400">
-                  @GoodluckTech
+                <MapPin className="w-12 h-12 text-purple-600 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Visit Us</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">Come say hello at our office</p>
+                <Button 
+                  onClick={() => window.open('https://maps.google.com/?q=444+MG+Road+Ste+218,+Bangalore,+India+560001', '_blank')}
+                  variant="outline" 
+                  className="border-purple-500 text-purple-600 dark:text-purple-400"
+                >
+                  444 MG Road Ste 218<br />Bangalore, India 560001
                 </Button>
               </CardContent>
             </Card>
+          </div>
+          
+          {/* Social Media Links */}
+          <div className="text-center">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Follow Us</h3>
+            <div className="flex justify-center gap-6">
+              <Button
+                onClick={() => window.open('https://x.com/GoodluckLabs', '_blank')}
+                variant="outline"
+                size="lg"
+                className="glassmorphism border-white/20 dark:border-gray-700/30 hover:border-purple-500/60"
+              >
+                <Twitter className="w-5 h-5 mr-2" />
+                Twitter
+              </Button>
+              <Button
+                onClick={() => window.open('https://www.linkedin.com/company/goodluck-labs/posts/?feedView=all', '_blank')}
+                variant="outline"
+                size="lg"
+                className="glassmorphism border-white/20 dark:border-gray-700/30 hover:border-purple-500/60"
+              >
+                <Linkedin className="w-5 h-5 mr-2" />
+                LinkedIn
+              </Button>
+              <Button
+                onClick={() => window.open('https://github.com/Goodlucklabs', '_blank')}
+                variant="outline"
+                size="lg"
+                className="glassmorphism border-white/20 dark:border-gray-700/30 hover:border-purple-500/60"
+              >
+                <Github className="w-5 h-5 mr-2" />
+                GitHub
+              </Button>
+            </div>
           </div>
         </div>
       </section>
