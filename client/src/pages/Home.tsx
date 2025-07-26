@@ -63,10 +63,10 @@ export default function Home() {
               <img 
                 src={goodluckLogo} 
                 alt="Goodluck Technology Logo" 
-                className="w-10 h-10 rounded-lg"
+                className="w-12 h-12 rounded-lg glow-effect"
               />
-              <span className="text-xl font-bold text-gray-900 dark:text-white">
-                Goodluck Technology
+              <span className="text-2xl font-black bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 bg-clip-text text-transparent tracking-wide">
+                GOODLUCK TECHNOLOGY
               </span>
             </div>
             
@@ -122,9 +122,12 @@ export default function Home() {
                   <Sun className="h-5 w-5" />
                 )}
               </Button>
-              <Button className="btn-gradient text-white">
+              <Button 
+                onClick={() => window.location.href = '/admin'}
+                className="btn-gradient text-white"
+              >
                 <User className="w-4 h-4 mr-2" />
-                Admin Panel
+                Administrator
               </Button>
             </div>
           </div>
@@ -157,7 +160,7 @@ export default function Home() {
             
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
               Building the future of decentralized applications with cutting-edge Web3 technologies. 
-              From DeFi protocols to NFT marketplaces, we craft blockchain solutions that scale.
+              From DeFi protocols to Web3 metaverse battle royal gaming, we craft blockchain solutions that scale.
             </p>
           </div>
           
@@ -171,10 +174,11 @@ export default function Home() {
             </Button>
             <Button 
               variant="outline"
+              onClick={() => window.location.href = 'mailto:goodlucklabs@gmail.com'}
               className="glassmorphism border-purple-500/30 hover:border-purple-500/60 px-8 py-4 rounded-xl font-semibold text-lg"
             >
-              <Play className="w-5 h-5 mr-3" />
-              Watch Demo
+              <Send className="w-5 h-5 mr-3" />
+              Contact Us
             </Button>
           </div>
           
@@ -182,19 +186,19 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
             <Card className="glassmorphism border-white/20 dark:border-gray-700/30 card-hover">
               <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-2">50+</div>
+                <div className="text-3xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-2">3+</div>
                 <div className="text-gray-600 dark:text-gray-300">Projects Delivered</div>
               </CardContent>
             </Card>
             <Card className="glassmorphism border-white/20 dark:border-gray-700/30 card-hover">
               <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-2">$50M+</div>
+                <div className="text-3xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-2">$1.5M+</div>
                 <div className="text-gray-600 dark:text-gray-300">Total Value Locked</div>
               </CardContent>
             </Card>
             <Card className="glassmorphism border-white/20 dark:border-gray-700/30 card-hover">
               <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-2">15+</div>
+                <div className="text-3xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-2">13+</div>
                 <div className="text-gray-600 dark:text-gray-300">Blockchain Networks</div>
               </CardContent>
             </Card>
@@ -347,18 +351,44 @@ export default function Home() {
           {/* Other Projects Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { title: "DeFi Protocol", description: "Automated market maker with yield farming capabilities", tags: ["Solana", "DeFi"] },
-              { title: "NFT Marketplace", description: "Cross-chain NFT trading platform with royalty management", tags: ["Multi-Chain", "NFT"] },
-              { title: "DAO Governance", description: "Decentralized governance platform with voting mechanisms", tags: ["DAO", "Governance"] },
+              { 
+                title: "DeFi Protocol", 
+                description: "Automated market maker with yield farming capabilities", 
+                tags: ["Solana", "DeFi"],
+                icon: "💰",
+                gradient: "from-green-500 to-emerald-600"
+              },
+              { 
+                title: "Web3 Metaverse Battle Royal Gaming", 
+                description: "Immersive blockchain-based battle royal gaming with NFT rewards", 
+                tags: ["Gaming", "Metaverse", "P2E"],
+                icon: "🎮",
+                gradient: "from-red-500 to-orange-600"
+              },
+              { 
+                title: "DAO Governance", 
+                description: "Decentralized governance platform with voting mechanisms", 
+                tags: ["DAO", "Governance"],
+                icon: "🏛️",
+                gradient: "from-blue-500 to-indigo-600"
+              },
+              { 
+                title: "Cyber Forensic Team", 
+                description: "Advanced blockchain security and forensic analysis services", 
+                tags: ["Security", "Forensics"],
+                icon: "🔍",
+                gradient: "from-purple-500 to-violet-600"
+              },
             ].map((project, index) => (
               <Card key={index} className="glassmorphism border-white/20 dark:border-gray-700/30 card-hover">
                 <CardContent className="p-6">
-                  <div className="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 rounded-xl mb-4 flex items-center justify-center">
-                    <div className="text-4xl text-gray-400 dark:text-gray-600">📱</div>
+                  <div className={`w-full h-48 bg-gradient-to-br ${project.gradient} rounded-xl mb-4 flex items-center justify-center relative overflow-hidden`}>
+                    <div className="absolute inset-0 bg-black/20"></div>
+                    <div className="text-6xl relative z-10">{project.icon}</div>
                   </div>
                   <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{project.title}</h4>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 flex-wrap">
                     {project.tags.map((tag) => (
                       <Badge key={tag} variant="secondary" className="text-xs">
                         {tag}

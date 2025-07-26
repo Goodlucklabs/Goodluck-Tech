@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -55,7 +55,7 @@ export default function AdminPanel() {
   const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null);
 
   // Redirect to login if not authenticated
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       toast({
         title: "Unauthorized",
@@ -774,7 +774,7 @@ export default function AdminPanel() {
                     <FormItem>
                       <FormLabel>Benefits (Optional)</FormLabel>
                       <FormControl>
-                        <Textarea {...field} rows={3} placeholder="Health insurance, equity, flexible hours..." />
+                        <Textarea {...field} value={field.value || ""} rows={3} placeholder="Health insurance, equity, flexible hours..." />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -883,7 +883,7 @@ export default function AdminPanel() {
                         </div>
                       </div>
                       <FormControl>
-                        <Switch checked={field.value} onCheckedChange={field.onChange} />
+                        <Switch checked={field.value || false} onCheckedChange={field.onChange} />
                       </FormControl>
                     </FormItem>
                   )}
