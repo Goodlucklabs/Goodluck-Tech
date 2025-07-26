@@ -192,6 +192,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Simple database management route (for demo purposes)
+  app.get('/api/admin/simple', async (req, res) => {
+    try {
+      const jobs = await storage.getAllJobs();
+      const announcements = await storage.getPublishedAnnouncements();
+      const applications = await storage.getAllApplications();
+      
+      res.json({
+        jobs: jobs.length,
+        announcements: announcements.length,
+        applications: applications.length,
+        message: "Database contains data. Use /admin route for full management."
+      });
+    } catch (error) {
+      console.error("Error fetching admin data:", error);
+      res.status(500).json({ message: "Failed to fetch admin data" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

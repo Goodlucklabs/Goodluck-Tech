@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
-  Moon, Sun, User, Rocket, Play, Code, Shield, 
+  Moon, Sun, User, Rocket, Code, Shield, 
   ExternalLink, Info, MapPin, Phone, Mail,
   Twitter, Linkedin, Github, Send 
 } from "lucide-react";
@@ -23,7 +23,7 @@ const jobCategories = [
   { id: "marketing", label: "Marketing" },
 ];
 
-export default function Home() {
+export default function Landing() {
   const { theme, toggleTheme } = useTheme();
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
@@ -128,6 +128,13 @@ export default function Home() {
               >
                 <User className="w-4 h-4 mr-2" />
                 Join Us
+              </Button>
+              <Button 
+                onClick={() => window.location.href = '/admin'}
+                variant="outline"
+                className="text-gray-600 dark:text-gray-300"
+              >
+                Admin
               </Button>
             </div>
           </div>
@@ -288,68 +295,8 @@ export default function Home() {
             </p>
           </div>
           
-          {/* Glider Project Showcase */}
-          <Card className="glassmorphism border-white/20 dark:border-gray-700/30 mb-12 card-hover">
-            <CardContent className="p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
-                  <div className="flex items-center mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl mr-4 flex items-center justify-center">
-                      <span className="text-white font-bold text-xl">G</span>
-                    </div>
-                    <div>
-                      <h3 className="text-3xl font-bold text-gray-900 dark:text-white">Glider</h3>
-                      <p className="text-gray-600 dark:text-gray-300">The Future of Blockchain Interaction</p>
-                    </div>
-                  </div>
-                  
-                  <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                    A comprehensive blockchain interaction platform featuring multi-level encrypted messaging, 
-                    decentralized social feeds, multi-chain wallet management, and integrated DEX functionality.
-                  </p>
-                  
-                  <div className="grid grid-cols-2 gap-4 mb-8">
-                    <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
-                      <div className="text-2xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-1">1K+</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">Community Members</div>
-                    </div>
-                    <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
-                      <div className="text-2xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-1">$2M+</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">Total Value Locked</div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-3 mb-8">
-                    <Badge className="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 border-none">Multi-Chain</Badge>
-                    <Badge className="bg-cyan-100 dark:bg-cyan-900/30 text-cyan-800 dark:text-cyan-300 border-none">Social DeFi</Badge>
-                    <Badge className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border-none">Cross-Chain</Badge>
-                  </div>
-                  
-                  <div className="flex gap-4">
-                    <Button asChild className="btn-gradient text-white">
-                      <a href="https://www.glider.world/" target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Visit Project
-                      </a>
-                    </Button>
-                    <Button variant="outline" className="border-purple-500 text-purple-600 dark:text-purple-400">
-                      <Info className="w-4 h-4 mr-2" />
-                      Learn More
-                    </Button>
-                  </div>
-                </div>
-                
-                <div className="relative">
-                  <div className="w-full h-80 bg-gradient-to-br from-purple-500/20 to-cyan-500/20 rounded-2xl flex items-center justify-center">
-                    <div className="text-6xl text-gray-400 dark:text-gray-600">🚀</div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          
           {/* Other Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { 
                 title: "DeFi Protocol", 
@@ -447,7 +394,10 @@ export default function Home() {
             <p className="text-gray-600 dark:text-gray-300 mb-6">
               Don't see the perfect role? We're always looking for exceptional talent.
             </p>
-            <Button className="btn-gradient text-white px-8 py-4 font-semibold">
+            <Button 
+              onClick={() => window.location.href = 'mailto:goodlucklabs@gmail.com'}
+              className="btn-gradient text-white px-8 py-4 font-semibold"
+            >
               <Send className="w-4 h-4 mr-2" />
               Send Us Your Resume
             </Button>
@@ -460,10 +410,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Latest <span className="text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent">Announcements</span>
+              Latest <span className="text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent">News</span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300">
-              Stay updated with our latest developments and industry insights.
+              Stay updated with our latest developments and company announcements.
             </p>
           </div>
           
@@ -476,7 +426,7 @@ export default function Home() {
           {announcements.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-600 dark:text-gray-300 text-lg">
-                No announcements at this time. Check back soon for updates!
+                No announcements at the moment. Check back soon for updates!
               </p>
             </div>
           )}
@@ -488,190 +438,58 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Let's Build <span className="text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent">Together</span>
+              Get In <span className="text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent">Touch</span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300">
-              Ready to start your blockchain project? Get in touch with our team.
+              Ready to build the future of blockchain together? Let's discuss your project.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Get in Touch</h3>
-              
-              <div className="space-y-6 mb-8">
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mr-4">
-                    <Mail className="text-white" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white">Email</h4>
-                    <p className="text-gray-600 dark:text-gray-300">hello@goodlucktech.com</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl flex items-center justify-center mr-4">
-                    <Phone className="text-white" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white">Phone</h4>
-                    <p className="text-gray-600 dark:text-gray-300">+1 (555) 123-4567</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mr-4">
-                    <MapPin className="text-white" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white">Office</h4>
-                    <p className="text-gray-600 dark:text-gray-300">San Francisco, CA</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div>
-                <h4 className="font-medium text-gray-900 dark:text-white mb-4">Follow Us</h4>
-                <div className="flex space-x-4">
-                  <Button variant="ghost" size="icon" className="hover:bg-purple-500 hover:text-white">
-                    <Twitter className="h-5 w-5" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="hover:bg-purple-500 hover:text-white">
-                    <Linkedin className="h-5 w-5" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="hover:bg-purple-500 hover:text-white">
-                    <Github className="h-5 w-5" />
-                  </Button>
-                </div>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="glassmorphism border-white/20 dark:border-gray-700/30 card-hover">
+              <CardContent className="p-8 text-center">
+                <Mail className="w-12 h-12 text-purple-600 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Email Us</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">Drop us a line anytime</p>
+                <Button 
+                  onClick={() => window.location.href = 'mailto:goodlucklabs@gmail.com'}
+                  className="btn-gradient text-white"
+                >
+                  goodlucklabs@gmail.com
+                </Button>
+              </CardContent>
+            </Card>
             
-            <Card className="glassmorphism border-white/20 dark:border-gray-700/30">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Send a Message</h3>
-                
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Name</label>
-                      <input 
-                        type="text" 
-                        className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                        placeholder="Enter your name"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
-                      <input 
-                        type="email" 
-                        className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                        placeholder="Enter your email"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Subject</label>
-                    <input 
-                      type="text" 
-                      className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                      placeholder="What's this about?"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message</label>
-                    <textarea 
-                      rows={5} 
-                      className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                      placeholder="Tell us about your project..."
-                    />
-                  </div>
-                  
-                  <Button className="w-full btn-gradient text-white py-4 font-semibold">
-                    <Send className="w-4 h-4 mr-2" />
-                    Send Message
-                  </Button>
-                </div>
+            <Card className="glassmorphism border-white/20 dark:border-gray-700/30 card-hover">
+              <CardContent className="p-8 text-center">
+                <Github className="w-12 h-12 text-purple-600 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">GitHub</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">Check out our open source projects</p>
+                <Button variant="outline" className="border-purple-500 text-purple-600 dark:text-purple-400">
+                  View Projects
+                </Button>
+              </CardContent>
+            </Card>
+            
+            <Card className="glassmorphism border-white/20 dark:border-gray-700/30 card-hover">
+              <CardContent className="p-8 text-center">
+                <Twitter className="w-12 h-12 text-purple-600 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Follow Us</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">Stay updated on social media</p>
+                <Button variant="outline" className="border-purple-500 text-purple-600 dark:text-purple-400">
+                  @GoodluckTech
+                </Button>
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-3 mb-4">
-                <img src={goodluckLogo} alt="Goodluck Technology" className="w-10 h-10 rounded-xl" />
-                <span className="text-xl font-bold">Goodluck Technology</span>
-              </div>
-              <p className="text-gray-400 mb-4">
-                Building the future of blockchain technology with innovative Web3 solutions.
-              </p>
-              <div className="flex space-x-4">
-                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-                  <Twitter className="h-5 w-5" />
-                </Button>
-                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-                  <Linkedin className="h-5 w-5" />
-                </Button>
-                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-                  <Github className="h-5 w-5" />
-                </Button>
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="font-bold mb-4">Company</h4>
-              <ul className="space-y-2">
-                <li><button onClick={() => scrollToSection('about')} className="text-gray-400 hover:text-white transition-colors">About</button></li>
-                <li><button onClick={() => scrollToSection('portfolio')} className="text-gray-400 hover:text-white transition-colors">Portfolio</button></li>
-                <li><button onClick={() => scrollToSection('jobs')} className="text-gray-400 hover:text-white transition-colors">Careers</button></li>
-                <li><button onClick={() => scrollToSection('contact')} className="text-gray-400 hover:text-white transition-colors">Contact</button></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-bold mb-4">Services</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Blockchain Development</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Smart Contracts</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">DeFi Solutions</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">NFT Platforms</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-bold mb-4">Resources</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Support</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-            <p className="text-gray-400">
-              © 2025 Goodluck Technology. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
-
       {/* Job Application Modal */}
       <JobApplicationModal
         job={selectedJob}
         isOpen={isApplicationModalOpen}
-        onClose={() => {
-          setIsApplicationModalOpen(false);
-          setSelectedJob(null);
-        }}
+        onClose={() => setIsApplicationModalOpen(false)}
       />
     </div>
   );
