@@ -59,75 +59,76 @@ export default function Home() {
       <nav className="fixed top-0 w-full z-50 glassmorphism border-b border-white/20 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2 sm:space-x-3">
               <img 
                 src={goodluckLogo} 
                 alt="Goodluck Technology Logo" 
-                className="w-10 h-10 rounded-lg"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg"
               />
-              <span className="text-xl font-bold text-gray-900 dark:text-white">
+              <span className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white truncate">
                 Goodluck Technology
               </span>
             </div>
             
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden lg:flex items-center space-x-6">
               <button 
                 onClick={() => scrollToSection('home')}
-                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors text-sm"
               >
                 Home
               </button>
               <button 
                 onClick={() => scrollToSection('about')}
-                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors text-sm"
               >
                 About
               </button>
               <button 
                 onClick={() => scrollToSection('portfolio')}
-                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors text-sm"
               >
                 Portfolio
               </button>
               <button 
                 onClick={() => scrollToSection('jobs')}
-                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors text-sm"
               >
                 Jobs
               </button>
               <button 
                 onClick={() => scrollToSection('announcements')}
-                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors text-sm"
               >
                 News
               </button>
               <button 
                 onClick={() => scrollToSection('contact')}
-                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors text-sm"
               >
                 Contact
               </button>
             </div>
             
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-3">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={toggleTheme}
-                className="rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                className="rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 h-8 w-8 sm:h-10 sm:w-10"
               >
                 {theme === "light" ? (
-                  <Moon className="h-5 w-5" />
+                  <Moon className="h-4 w-4 sm:h-5 sm:w-5" />
                 ) : (
-                  <Sun className="h-5 w-5" />
+                  <Sun className="h-4 w-4 sm:h-5 sm:w-5" />
                 )}
               </Button>
               <Button 
                 onClick={() => scrollToSection('jobs')}
-                className="btn-gradient text-white"
+                className="btn-gradient text-white text-sm px-3 py-2 sm:px-4 sm:py-2"
               >
-                <User className="w-4 h-4 mr-2" />
-                Join Us
+                <User className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Join Us</span>
+                <span className="sm:hidden">Join</span>
               </Button>
             </div>
           </div>
@@ -138,74 +139,74 @@ export default function Home() {
       <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10"></div>
         
-        {/* Floating elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-purple-500/20 rounded-full animate-float"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-cyan-500/20 rotate-45 animate-float" style={{animationDelay: "2s"}}></div>
-        <div className="absolute bottom-40 left-20 w-12 h-12 bg-green-500/20 rounded-full animate-float" style={{animationDelay: "4s"}}></div>
+        {/* Floating elements - hidden on mobile */}
+        <div className="hidden md:block absolute top-20 left-10 w-20 h-20 bg-purple-500/20 rounded-full animate-float"></div>
+        <div className="hidden md:block absolute top-40 right-20 w-16 h-16 bg-cyan-500/20 rotate-45 animate-float" style={{animationDelay: "2s"}}></div>
+        <div className="hidden md:block absolute bottom-40 left-20 w-12 h-12 bg-green-500/20 rounded-full animate-float" style={{animationDelay: "4s"}}></div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <div className="mb-8">
-            <div className="inline-flex items-center justify-center w-24 h-24 mb-6">
+          <div className="mb-8 sm:mb-12">
+            <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mb-4 sm:mb-6">
               <img 
                 src={goodluckLogo} 
                 alt="Goodluck Technology" 
-                className="w-full h-full rounded-2xl glow-effect"
+                className="w-full h-full rounded-xl sm:rounded-2xl glow-effect"
               />
             </div>
             
-            <h1 className="text-6xl md:text-7xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight px-2">
               Next-Gen <span className="text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent">Blockchain</span><br />
               Development Studio
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed px-4">
               Building the future of decentralized applications with cutting-edge Web3 technologies. 
               From DeFi protocols to Web3 metaverse battle royal gaming, we craft blockchain solutions that scale.
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-12 sm:mb-16 px-4">
             <Button 
               onClick={() => scrollToSection('portfolio')}
-              className="btn-gradient text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-2xl"
+              className="btn-gradient text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg shadow-2xl w-full sm:w-auto"
             >
-              <Rocket className="w-5 h-5 mr-3" />
+              <Rocket className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" />
               View Our Projects
             </Button>
             <Button 
               variant="outline"
               onClick={() => window.location.href = 'mailto:goodlucklabs@gmail.com'}
-              className="glassmorphism border-purple-500/30 hover:border-purple-500/60 px-8 py-4 rounded-xl font-semibold text-lg"
+              className="glassmorphism border-purple-500/30 hover:border-purple-500/60 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg w-full sm:w-auto"
             >
-              <Send className="w-5 h-5 mr-3" />
+              <Send className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" />
               Contact Us
             </Button>
           </div>
           
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 max-w-4xl mx-auto px-4">
             <Card className="glassmorphism border-white/20 dark:border-gray-700/30 card-hover">
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-2">3+</div>
-                <div className="text-gray-600 dark:text-gray-300">Projects Delivered</div>
+              <CardContent className="p-4 sm:p-6 text-center">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-1 sm:mb-2">3+</div>
+                <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Projects Delivered</div>
               </CardContent>
             </Card>
             <Card className="glassmorphism border-white/20 dark:border-gray-700/30 card-hover">
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-2">$1.5M+</div>
-                <div className="text-gray-600 dark:text-gray-300">Total Value Locked</div>
+              <CardContent className="p-4 sm:p-6 text-center">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-1 sm:mb-2">$1.5M+</div>
+                <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Total Value Locked</div>
               </CardContent>
             </Card>
             <Card className="glassmorphism border-white/20 dark:border-gray-700/30 card-hover">
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-2">13+</div>
-                <div className="text-gray-600 dark:text-gray-300">Blockchain Networks</div>
+              <CardContent className="p-4 sm:p-6 text-center">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-1 sm:mb-2">13+</div>
+                <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Blockchain Networks</div>
               </CardContent>
             </Card>
             <Card className="glassmorphism border-white/20 dark:border-gray-700/30 card-hover">
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-2">99.9%</div>
-                <div className="text-gray-600 dark:text-gray-300">Uptime</div>
+              <CardContent className="p-4 sm:p-6 text-center">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-1 sm:mb-2">99.9%</div>
+                <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Uptime</div>
               </CardContent>
             </Card>
           </div>
@@ -365,13 +366,7 @@ export default function Home() {
                 icon: "🎮",
                 gradient: "from-red-500 to-orange-600"
               },
-              { 
-                title: "DAO Governance", 
-                description: "Decentralized governance platform with voting mechanisms", 
-                tags: ["DAO", "Governance"],
-                icon: "🏛️",
-                gradient: "from-blue-500 to-indigo-600"
-              },
+
               { 
                 title: "Cyber Forensic Team", 
                 description: "Advanced blockchain security and forensic analysis services", 
@@ -415,13 +410,13 @@ export default function Home() {
           </div>
           
           {/* Job Filters */}
-          <div className="flex flex-wrap gap-4 mb-8 justify-center">
+          <div className="flex flex-wrap gap-2 sm:gap-4 mb-8 justify-center px-4">
             {jobCategories.map((category) => (
               <Button
                 key={category.id}
                 variant={selectedJobCategory === category.id ? "default" : "outline"}
                 onClick={() => setSelectedJobCategory(category.id)}
-                className={selectedJobCategory === category.id ? "btn-gradient text-white" : "glassmorphism border-white/20 dark:border-gray-700/30"}
+                className={`text-sm px-3 py-2 ${selectedJobCategory === category.id ? "btn-gradient text-white" : "glassmorphism border-white/20 dark:border-gray-700/30"}`}
               >
                 {category.label}
               </Button>
@@ -429,7 +424,7 @@ export default function Home() {
           </div>
           
           {/* Job Listings */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-12 px-4">
             {filteredJobs.map((job) => (
               <JobCard key={job.id} job={job} onApply={handleApplyToJob} />
             ))}
