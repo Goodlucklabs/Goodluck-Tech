@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug - Asset Loading Test</title>
+</head>
+<body>
+    <h1>Asset Loading Test</h1>
+    <p>Testing if assets can be loaded...</p>
+    
+    <script>
+        // Test if CSS loads
+        fetch('/Goodluck-Tech/assets/index-e5-SR1WV.css')
+            .then(response => {
+                console.log('CSS Status:', response.status);
+                document.body.innerHTML += '<p>CSS Status: ' + response.status + '</p>';
+            })
+            .catch(err => {
+                console.log('CSS Error:', err);
+                document.body.innerHTML += '<p>CSS Error: ' + err + '</p>';
+            });
+            
+        // Test if JS loads
+        fetch('/Goodluck-Tech/assets/index-Lxln8raG.js')
+            .then(response => {
+                console.log('JS Status:', response.status);
+                document.body.innerHTML += '<p>JS Status: ' + response.status + '</p>';
+            })
+            .catch(err => {
+                console.log('JS Error:', err);
+                document.body.innerHTML += '<p>JS Error: ' + err + '</p>';
+            });
+    </script>
+</body>
+</html>

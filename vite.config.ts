@@ -5,6 +5,7 @@ import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import fs from "fs";
 
 export default defineConfig({
+  base: process.env.NODE_ENV === 'production' ? '/Goodluck-Tech/' : '/',
   plugins: [
     react(),
     runtimeErrorOverlay(),
