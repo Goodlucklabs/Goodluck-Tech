@@ -1,48 +1,51 @@
-import express, { type Express } from "express";
-import fs from "fs";
+import { Express } from "express";
+import { createServer as createViteServer } from "vite";
+import express from "express";
 import path from "path";
-import { createServer as createViteServer, createLogger } from "vite";
-import { type Server } from "http";
-import viteConfig from "../vite.config";
+import fs from "fs";
 import { nanoid } from "nanoid";
 
-const viteLogger = createLogger();
+export const log = console.log;
 
-export function log(message: string, source = "express") {
-  const formattedTime = new Date().toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: true,
-  });
-
-  console.log(`${formattedTime} [${source}] ${message}`);
-}
-
-export async function setupVite(app: Express, server: Server) {
-  const serverOptions = {
-    middlewareMode: true,
-    hmr: { server },
-    allowedHosts: true as const,
-  };
-
+export async function setupVite(app: Express, server: any) {
   const vite = await createViteServer({
-    ...viteConfig,
-    configFile: false,
-    customLogger: {
-      ...viteLogger,
-      error: (msg, options) => {
-        viteLogger.error(msg, options);
-        process.exit(1);
-      },
-    },
-    server: serverOptions,
-    appType: "custom",
+    server: { middlewareMode: true },
+    appType: "spa",
   });
+
+  // Admin panel route
+  app.get('/admin.html', async (req, res) => {
+    try {
+      const adminPath = path.resolve(
+        import.meta.dirname,
+        "..",
+        "client",
+        "admin.html",
+      );
+      
+      if (fs.existsSync(adminPath)) {
+        const adminContent = await fs.promises.readFile(adminPath, "utf-8");
+        res.status(200).set({ "Content-Type": "text/html" }).end(adminContent);
+      } else {
+        res.status(404).send("Admin panel not found");
+      }
+    } catch (e) {
+      res.status(500).send("Error loading admin panel");
+    }
+  });
+
+
 
   app.use(vite.middlewares);
+  
+  // Only serve React app for non-API routes
   app.use("*", async (req, res, next) => {
     const url = req.originalUrl;
+    
+    // Skip API routes
+    if (url.startsWith('/api/')) {
+      return next();
+    }
 
     try {
       const clientTemplate = path.resolve(
@@ -70,16 +73,36 @@ export async function setupVite(app: Express, server: Server) {
 export function serveStatic(app: Express) {
   const distPath = path.resolve(import.meta.dirname, "public");
 
-  if (!fs.existsSync(distPath)) {
-    throw new Error(
-      `Could not find the build directory: ${distPath}, make sure to build the client first`,
-    );
-  }
+  // Admin panel route
+  app.get('/admin.html', async (req, res) => {
+    try {
+      const adminPath = path.resolve(
+        import.meta.dirname,
+        "..",
+        "client",
+        "admin.html",
+      );
+      
+      if (fs.existsSync(adminPath)) {
+        const adminContent = await fs.promises.readFile(adminPath, "utf-8");
+        res.status(200).set({ "Content-Type": "text/html" }).end(adminContent);
+      } else {
+        res.status(404).send("Admin panel not found");
+      }
+    } catch (e) {
+      res.status(500).send("Error loading admin panel");
+    }
+  });
+
+
 
   app.use(express.static(distPath));
 
-  // fall through to index.html if the file doesn't exist
-  app.use("*", (_req, res) => {
+  // fall through to index.html if the file doesn't exist (but not for API routes)
+  app.use("*", (req, res, next) => {
+    if (req.originalUrl.startsWith('/api/')) {
+      return next();
+    }
     res.sendFile(path.resolve(distPath, "index.html"));
   });
 }

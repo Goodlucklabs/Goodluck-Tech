@@ -118,7 +118,8 @@ export default function AdminPanel() {
         salaryMax: data.salaryMax ? parseInt(data.salaryMax) : null,
         skills: data.skills.split(",").map(s => s.trim()).filter(Boolean),
       };
-      return await apiRequest("POST", "/api/jobs", jobData);
+      const response = await apiRequest("POST", "/api/jobs", jobData);
+      return await response.json();
     },
     onSuccess: () => {
       toast({ title: "Success", description: "Job created successfully" });
@@ -154,7 +155,8 @@ export default function AdminPanel() {
         salaryMax: data.salaryMax ? parseInt(data.salaryMax) : null,
         skills: data.skills.split(",").map(s => s.trim()).filter(Boolean),
       };
-      return await apiRequest("PUT", `/api/jobs/${id}`, jobData);
+      const response = await apiRequest("PUT", `/api/jobs/${id}`, jobData);
+      return await response.json();
     },
     onSuccess: () => {
       toast({ title: "Success", description: "Job updated successfully" });
@@ -213,7 +215,8 @@ export default function AdminPanel() {
 
   const createAnnouncementMutation = useMutation({
     mutationFn: async (data: AnnouncementFormData) => {
-      return await apiRequest("POST", "/api/announcements", data);
+      const response = await apiRequest("POST", "/api/announcements", data);
+      return await response.json();
     },
     onSuccess: () => {
       toast({ title: "Success", description: "Announcement created successfully" });
@@ -244,7 +247,8 @@ export default function AdminPanel() {
 
   const updateAnnouncementMutation = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: AnnouncementFormData }) => {
-      return await apiRequest("PUT", `/api/announcements/${id}`, data);
+      const response = await apiRequest("PUT", `/api/announcements/${id}`, data);
+      return await response.json();
     },
     onSuccess: () => {
       toast({ title: "Success", description: "Announcement updated successfully" });
@@ -357,6 +361,56 @@ export default function AdminPanel() {
   const formatDate = (date: Date | string | null) => {
     if (!date) return "";
     return new Date(date).toLocaleDateString();
+  };
+
+  const handleDownloadResume = (application: JobApplication & { jobTitle: string }) => {
+    if (application.resumeUrl) {
+      // Create a temporary link to download the resume
+      const link = document.createElement('a');
+      link.href = application.resumeUrl;
+      link.download = `${application.firstName}_${application.lastName}_Resume.pdf`;
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      toast({
+        title: "No Resume",
+        description: "This application doesn't have a resume attached.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleViewApplication = (application: JobApplication & { jobTitle: string }) => {
+    // For now, show application details in a toast
+    // In a real app, this would open a detailed modal
+    toast({
+      title: "Application Details",
+      description: `${application.firstName} ${application.lastName} applied for ${application.jobTitle}. Cover Letter: ${application.coverLetter?.substring(0, 100)}...`,
+    });
+  };
+
+  const updateApplicationStatusMutation = useMutation({
+    mutationFn: async ({ id, status }: { id: string; status: string }) => {
+      const response = await apiRequest("PUT", `/api/applications/${id}/status`, { status });
+      return await response.json();
+    },
+    onSuccess: () => {
+      toast({ title: "Success", description: "Application status updated successfully" });
+      queryClient.invalidateQueries({ queryKey: ["/api/applications"] });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to update application status",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleStatusChange = (applicationId: string, newStatus: string) => {
+    updateApplicationStatusMutation.mutate({ id: applicationId, status: newStatus });
   };
 
   if (isLoading) {
@@ -582,11 +636,20 @@ export default function AdminPanel() {
                           </div>
                         </div>
                         <div className="flex gap-2">
-                          <Button variant="outline" size="sm">
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => handleViewApplication(application)}
+                          >
                             <Eye className="w-4 h-4 mr-2" />
                             View Application
                           </Button>
-                          <Button variant="outline" size="sm">
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => handleDownloadResume(application)}
+                            disabled={!application.resumeUrl}
+                          >
                             <Download className="w-4 h-4 mr-2" />
                             Download Resume
                           </Button>
@@ -594,19 +657,44 @@ export default function AdminPanel() {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-2">
-                        <Badge className={
-                          application.status === "accepted" ? "bg-green-100 text-green-800" :
-                          application.status === "rejected" ? "bg-red-100 text-red-800" :
-                          application.status === "reviewing" ? "bg-blue-100 text-blue-800" :
-                          "bg-yellow-100 text-yellow-800"
-                        }>
-                          {application.status}
-                        </Badge>
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <Badge className={
+                            application.status === "accepted" ? "bg-green-100 text-green-800" :
+                            application.status === "rejected" ? "bg-red-100 text-red-800" :
+                            application.status === "reviewing" ? "bg-blue-100 text-blue-800" :
+                            "bg-yellow-100 text-yellow-800"
+                          }>
+                            {application.status}
+                          </Badge>
+                          
+                          <Select 
+                            value={application.status} 
+                            onValueChange={(value) => handleStatusChange(application.id, value)}
+                          >
+                            <SelectTrigger className="w-32">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="pending">Pending</SelectItem>
+                              <SelectItem value="reviewing">Reviewing</SelectItem>
+                              <SelectItem value="accepted">Accepted</SelectItem>
+                              <SelectItem value="rejected">Rejected</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
                         {application.portfolioUrl && (
                           <p className="text-sm text-gray-600 dark:text-gray-300">
                             Portfolio: <a href={application.portfolioUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{application.portfolioUrl}</a>
                           </p>
+                        )}
+                        
+                        {application.coverLetter && (
+                          <div className="text-sm text-gray-600 dark:text-gray-300">
+                            <p className="font-medium mb-1">Cover Letter:</p>
+                            <p className="line-clamp-3">{application.coverLetter}</p>
+                          </div>
                         )}
                       </div>
                     </CardContent>

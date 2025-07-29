@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { type Job, type Announcement } from "@shared/schema";
 import { useTheme } from "@/components/ThemeProvider";
 import { JobCard } from "@/components/JobCard";
@@ -28,6 +28,16 @@ export default function Home() {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
   const [selectedJobCategory, setSelectedJobCategory] = useState("all");
+  
+  // Contact form state
+  const [contactForm, setContactForm] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  
+
 
   const { data: jobs = [] } = useQuery<Job[]>({
     queryKey: ["/api/jobs"],
@@ -42,6 +52,39 @@ export default function Home() {
     job.department.toLowerCase() === selectedJobCategory.toLowerCase()
   );
 
+  // Contact form mutation
+  const contactMutation = useMutation({
+    mutationFn: async (formData: typeof contactForm) => {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      // Reset form
+      setContactForm({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+      alert('Message sent successfully! We\'ll get back to you soon.');
+    },
+    onError: (error) => {
+      console.error('Error sending message:', error);
+      alert('Failed to send message. Please try again.');
+    },
+  });
+
   const handleApplyToJob = (job: Job) => {
     setSelectedJob(job);
     setIsApplicationModalOpen(true);
@@ -51,6 +94,25 @@ export default function Home() {
     document.getElementById(sectionId)?.scrollIntoView({ 
       behavior: 'smooth' 
     });
+  };
+
+  const handleContactFormChange = (field: keyof typeof contactForm, value: string) => {
+    setContactForm(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleContactFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Basic validation
+    if (!contactForm.name || !contactForm.email || !contactForm.subject || !contactForm.message) {
+      alert('Please fill in all fields');
+      return;
+    }
+    
+    contactMutation.mutate(contactForm);
   };
 
   return (
@@ -291,58 +353,69 @@ export default function Home() {
           
           {/* Glider Project Showcase */}
           <Card className="glassmorphism border-white/20 dark:border-gray-700/30 mb-12 card-hover">
-            <CardContent className="p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
-                  <div className="flex items-center mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl mr-4 flex items-center justify-center">
-                      <span className="text-white font-bold text-xl">G</span>
+            <CardContent className="p-4 sm:p-6 lg:p-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
+                <div className="order-2 lg:order-1">
+                  <div className="flex items-center mb-4 sm:mb-6">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 mr-3 sm:mr-4 flex items-center justify-center flex-shrink-0">
+                      <img 
+                        src="/attached_assets/glider-bird-logo.png" 
+                        alt="Glider Bird Logo" 
+                        className="w-full h-full object-contain rounded-xl sm:rounded-2xl"
+                      />
                     </div>
-                    <div>
-                      <h3 className="text-3xl font-bold text-gray-900 dark:text-white">Glider</h3>
-                      <p className="text-gray-600 dark:text-gray-300">The Future of Blockchain Interaction</p>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white truncate">Glider</h3>
+                      <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">The Future of Blockchain Interaction</p>
                     </div>
                   </div>
                   
-                  <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                  <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 mb-4 sm:mb-6 leading-relaxed">
                     A comprehensive blockchain interaction platform featuring multi-level encrypted messaging, 
                     decentralized social feeds, multi-chain wallet management, and integrated DEX functionality.
                   </p>
                   
-                  <div className="grid grid-cols-2 gap-4 mb-8">
-                    <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
-                      <div className="text-2xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-1">1K+</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">Community Members</div>
+                  <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
+                    <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-3 sm:p-4">
+                      <div className="text-lg sm:text-xl lg:text-2xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-1">1K+</div>
+                      <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Community Members</div>
                     </div>
-                    <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
-                      <div className="text-2xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-1">$2M+</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">Total Value Locked</div>
+                    <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-3 sm:p-4">
+                      <div className="text-lg sm:text-xl lg:text-2xl font-bold text-gradient bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-1">$2M+</div>
+                      <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Total Value Locked</div>
                     </div>
                   </div>
                   
-                  <div className="flex flex-wrap gap-3 mb-8">
-                    <Badge className="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 border-none">Multi-Chain</Badge>
-                    <Badge className="bg-cyan-100 dark:bg-cyan-900/30 text-cyan-800 dark:text-cyan-300 border-none">Social DeFi</Badge>
-                    <Badge className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border-none">Cross-Chain</Badge>
+                  <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8">
+                    <Badge className="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 border-none text-xs sm:text-sm px-2 sm:px-3 py-1">Multi-Chain</Badge>
+                    <Badge className="bg-cyan-100 dark:bg-cyan-900/30 text-cyan-800 dark:text-cyan-300 border-none text-xs sm:text-sm px-2 sm:px-3 py-1">Social DeFi</Badge>
+                    <Badge className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border-none text-xs sm:text-sm px-2 sm:px-3 py-1">Cross-Chain</Badge>
                   </div>
                   
-                  <div className="flex gap-4">
-                    <Button asChild className="btn-gradient text-white">
+                  <div className="flex flex-col gap-3">
+                    <Button asChild className="btn-gradient text-white text-sm px-4 py-2.5 w-full">
                       <a href="https://www.glider.world/" target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="w-4 h-4 mr-2" />
+                        <ExternalLink className="w-3 h-3 mr-2" />
                         Visit Project
                       </a>
                     </Button>
-                    <Button variant="outline" className="border-purple-500 text-purple-600 dark:text-purple-400">
-                      <Info className="w-4 h-4 mr-2" />
+                    <Button variant="outline" className="border-purple-500 text-purple-600 dark:text-purple-400 text-sm px-4 py-2.5 w-full">
+                      <Info className="w-3 h-3 mr-2" />
                       Learn More
                     </Button>
                   </div>
                 </div>
                 
-                <div className="relative">
-                  <div className="w-full h-80 bg-gradient-to-br from-purple-500/20 to-cyan-500/20 rounded-2xl flex items-center justify-center">
-                    <div className="text-6xl text-gray-400 dark:text-gray-600">🚀</div>
+                <div className="relative order-1 lg:order-2">
+                  <div className="w-full h-56 sm:h-64 md:h-72 lg:h-80 xl:h-96 flex items-center justify-center p-2 sm:p-3 lg:p-4 xl:p-6 bg-gradient-to-br from-purple-50 to-cyan-50 dark:from-purple-900/20 dark:to-cyan-900/20 rounded-2xl">
+                    <div className="w-full h-full flex items-center justify-center">
+                      <img 
+                        src="/attached_assets/glider-text-logo.png" 
+                        alt="Glider Text Logo" 
+                        className="w-full h-full object-contain max-w-full max-h-full"
+                        style={{ minHeight: '120px', minWidth: '200px' }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -579,22 +652,28 @@ export default function Home() {
               <CardContent className="p-8">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Send a Message</h3>
                 
-                <div className="space-y-6">
+                <form onSubmit={handleContactFormSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Name</label>
                       <input 
                         type="text" 
+                        value={contactForm.name}
+                        onChange={(e) => handleContactFormChange('name', e.target.value)}
                         className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         placeholder="Enter your name"
+                        required
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
                       <input 
                         type="email" 
+                        value={contactForm.email}
+                        onChange={(e) => handleContactFormChange('email', e.target.value)}
                         className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         placeholder="Enter your email"
+                        required
                       />
                     </div>
                   </div>
@@ -603,8 +682,11 @@ export default function Home() {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Subject</label>
                     <input 
                       type="text" 
+                      value={contactForm.subject}
+                      onChange={(e) => handleContactFormChange('subject', e.target.value)}
                       className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       placeholder="What's this about?"
+                      required
                     />
                   </div>
                   
@@ -612,19 +694,23 @@ export default function Home() {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message</label>
                     <textarea 
                       rows={5} 
+                      value={contactForm.message}
+                      onChange={(e) => handleContactFormChange('message', e.target.value)}
                       className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       placeholder="Tell us about your project..."
+                      required
                     />
                   </div>
                   
                   <Button 
-                    onClick={() => window.location.href = 'mailto:goodlucklabs@gmail.com?subject=Contact Form Message&body=Hi Goodluck Labs team,%0D%0A%0D%0APlease fill in your message here.%0D%0A%0D%0ABest regards'}
-                    className="w-full btn-gradient text-white py-4 font-semibold"
+                    type="submit"
+                    disabled={contactMutation.isPending}
+                    className="w-full btn-gradient text-white py-4 font-semibold disabled:opacity-50"
                   >
                     <Send className="w-4 h-4 mr-2" />
-                    Send Message
+                    {contactMutation.isPending ? 'Sending...' : 'Send Message'}
                   </Button>
-                </div>
+                </form>
               </CardContent>
             </Card>
           </div>

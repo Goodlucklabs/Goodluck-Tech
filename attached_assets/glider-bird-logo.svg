@@ -1,0 +1,7 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Simplified bird logo based on the image -->
+  <path d="M16 32L24 24L32 16L40 24L48 32L40 40L32 48L24 40L16 32Z" fill="white"/>
+  <path d="M20 28L28 20L36 28L28 36L20 28Z" fill="white"/>
+  <path d="M24 32L32 24L40 32L32 40L24 32Z" fill="white"/>
+  <circle cx="28" cy="28" r="2" fill="black"/>
+</svg>

@@ -3,6 +3,7 @@ import {
   jobs,
   jobApplications,
   announcements,
+  contactMessages,
   type User,
   type UpsertUser,
   type Job,
@@ -11,9 +12,12 @@ import {
   type InsertJobApplication,
   type Announcement,
   type InsertAnnouncement,
+  type ContactMessage,
+  type InsertContactMessage,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and } from "drizzle-orm";
+import { MockStorage } from "./mockStorage";
 
 export interface IStorage {
   // User operations (required for Replit Auth)
@@ -39,6 +43,12 @@ export interface IStorage {
   createAnnouncement(announcement: InsertAnnouncement): Promise<Announcement>;
   updateAnnouncement(id: string, announcement: Partial<InsertAnnouncement>): Promise<Announcement>;
   deleteAnnouncement(id: string): Promise<void>;
+  
+  // Contact message operations
+  getAllContactMessages(): Promise<ContactMessage[]>;
+  createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
+  updateContactMessageStatus(id: string, status: string): Promise<ContactMessage>;
+  deleteContactMessage(id: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -163,6 +173,48 @@ export class DatabaseStorage implements IStorage {
   async deleteAnnouncement(id: string): Promise<void> {
     await db.delete(announcements).where(eq(announcements.id, id));
   }
+
+  // Contact message operations
+  async getAllContactMessages(): Promise<ContactMessage[]> {
+    return await db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt));
+  }
+
+  async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
+    const [newMessage] = await db.insert(contactMessages).values(message).returning();
+    return newMessage;
+  }
+
+  async updateContactMessageStatus(id: string, status: string): Promise<ContactMessage> {
+    const [updatedMessage] = await db
+      .update(contactMessages)
+      .set({ status, updatedAt: new Date() })
+      .where(eq(contactMessages.id, id))
+      .returning();
+    return updatedMessage;
+  }
+
+  async deleteContactMessage(id: string): Promise<void> {
+    await db.delete(contactMessages).where(eq(contactMessages.id, id));
+  }
 }
 
-export const storage = new DatabaseStorage();
+// Initialize storage - use mock storage for now since database is not configured
+let storage: IStorage;
+
+async function initializeStorage() {
+  try {
+    // Test database connection
+    await db.select().from(users).limit(1);
+    storage = new DatabaseStorage();
+    console.log("✓ Using database storage");
+  } catch (error) {
+    console.log("⚠ Database not available, using mock storage");
+    storage = new MockStorage();
+  }
+}
+
+// Initialize with mock storage immediately
+storage = new MockStorage();
+console.log("✓ Using mock storage");
+
+export { storage, initializeStorage };

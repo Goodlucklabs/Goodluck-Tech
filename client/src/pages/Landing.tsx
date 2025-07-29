@@ -33,7 +33,7 @@ export default function Landing() {
     queryKey: ["/api/jobs"],
   });
 
-  const { data: announcements = [] } = useQuery<Announcement[]>({
+  const { data: announcements = [], isLoading: announcementsLoading, error: announcementsError } = useQuery<Announcement[]>({
     queryKey: ["/api/announcements"],
   });
 
@@ -417,18 +417,34 @@ export default function Landing() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {announcements.map((announcement) => (
-              <AnnouncementCard key={announcement.id} announcement={announcement} />
-            ))}
-          </div>
-          
-          {announcements.length === 0 && (
+          {announcementsLoading ? (
             <div className="text-center py-12">
               <p className="text-gray-600 dark:text-gray-300 text-lg">
-                No announcements at the moment. Check back soon for updates!
+                Loading announcements...
               </p>
             </div>
+          ) : announcementsError ? (
+            <div className="text-center py-12">
+              <p className="text-red-600 text-lg">
+                Error loading announcements: {announcementsError.message}
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {announcements.map((announcement) => (
+                  <AnnouncementCard key={announcement.id} announcement={announcement} />
+                ))}
+              </div>
+              
+              {announcements.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-gray-600 dark:text-gray-300 text-lg">
+                    No announcements at the moment. Check back soon for updates!
+                  </p>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>
