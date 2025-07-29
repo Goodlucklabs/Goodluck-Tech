@@ -13,8 +13,27 @@
     <link rel="stylesheet" crossorigin href="/Goodluck-Tech/assets/index-e5-SR1WV.css">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif;">
+        <h1>🔄 Loading Goodluck Technology...</h1>
+        <p>If this message persists, there may be a JavaScript loading issue.</p>
+        <div id="debug-info" style="margin-top: 20px; padding: 10px; background: #f0f0f0; border-radius: 5px;">
+          <strong>Debug Info:</strong><br>
+          <span id="js-status">Checking JavaScript...</span>
+        </div>
+      </div>
+    </div>
     <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
     <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
+    <script>
+      // Debug script to check if React is loading
+      setTimeout(() => {
+        const root = document.getElementById('root');
+        if (root && root.innerHTML.includes('Loading Goodluck Technology')) {
+          document.getElementById('js-status').innerHTML = '❌ React app failed to load. Check console for errors.';
+          console.error('React app did not mount properly');
+        }
+      }, 3000);
+    </script>
   </body>
 </html>
